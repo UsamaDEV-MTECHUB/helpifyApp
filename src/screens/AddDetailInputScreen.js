@@ -24,7 +24,7 @@ import { RFValue } from 'react-native-responsive-fontsize'
 import ImagePicker from 'react-native-image-crop-picker';
 import moment from 'moment'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-const Delivery = ({ navigation }) => {
+const AddDetailInputScreen = ({ navigation }) => {
     const [title, setTitle] = useState(null)
     const [description, setDescription] = useState(null)
     const [iPrice, setIPrice] = useState(null)
@@ -93,7 +93,7 @@ const Delivery = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <View style={styles.mainContainer} >
-                <View style={{ marginBottom: hp("2%")}}>
+                <View style={{marginBottom: hp("0%")}}>
                     <View style={{
                         alignItems: 'center',
                         justifyContent: "center", height: hp("5%"),
@@ -102,60 +102,112 @@ const Delivery = ({ navigation }) => {
                         <Text style={{
                             fontSize: RFValue(30), color: '#515C6F',
                         }}>
-                            Make your Add</Text>
+                            Ad Detail</Text>
                     </View>
-                    <View style={styles.buttonsContainer}>
-                        <TouchableOpacity
-                            onPress={() => openCamera()}
-                            style={styles.cameraButon}>
-                            <Text style={styles.cameraButonText}>
-                                Open Camera
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => openPiker()}
-                            style={styles.cameraButon}>
-                            <Text style={styles.cameraButonText}>
-                                Open Gallery
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-
-
-
                 </View>
-                <View style={{ flex: 1,}}>
-                    {
-                        !list.length ?
-                            <View style={{ alignItems: 'center', marginTop: hp("2%") }}>
-                                <Text style={{ fontSize: RFValue(20) }}>There is nothing in list</Text>
+                <ScrollView style={{marginBottom: hp("2%"), flex: 1}}>
+                <View style={{ ...styles.inputContainerStyle, height: hp("6%"), }}>
+                        <View style={styles.mainInputContainer}>
+                            <View style={styles.textInputContainerStyle}>
+                                <TextInput
+                                    value={title}
+                                    onChangeText={setTitle}
+                                    placeholder="Title"
+                                    placeholderTextColor="lightgrey"
+                                    style={styles.input}
+                                />
                             </View>
-                            :
-                                <ScrollView>
-                                    {
-                                        list.map((item, index) => (
-                                            <View key={index} style={styles.imageContainer}>
-                                                <ImageBackground style={{ height: "100%", width: "100%" }}
-                                                    resizeMode="cover"
-                                                    source={{ uri: item }} >
-                                                    <View style={{ margin: hp("1%") }}>
-                                                        <Ionicons
-                                                            onPress={() => removePic(item)}
-                                                            name="trash"
-                                                            size={hp("3%")}
-                                                            color={Colors.primaryColor} />
-                                                    </View>
-                                                </ImageBackground>
-                                            </View>
-                                        ))
-                                    }
-                                </ScrollView>
-                    }
-                </View>
+                        </View>
+                    </View>
+                    <View style={styles.descriptionContainerStyle}>
+                        <View style={styles.mainInputContainer}>
+                            <View style={styles.textInputContainerStyle}>
+                                <TextInput
+                                    multiline
+                                    value={description}
+                                    onChangeText={setDescription}
+                                    placeholderTextColor="lightgrey"
+                                    placeholder="Description..."
+                                    style={styles.descInput}
+                                />
+                            </View>
+                        </View>
+                    </View>
+                    <Text style={styles.iPriceTitleStyle}>Choose Time</Text>
+                    <View style={styles.timeinputContainerStyle}>
+                        <View style={styles.mainInputContainer}>
+                            <View style={styles.textInputContainerStyle}>
+                                <TextInput
+                                    editable={false}
+                                    placeholder={eTime}
+                                    style={{ ...styles.input, color: "#ccc" }} />
+                            </View>
+                            <TouchableOpacity
+                                onPress={() => showTimepicker()}
+                                style={styles.leftIconContainerStyle}
+                            >
+                                <Icon
+                                    name='time-outline'
+                                    size={hp("3%")}
+                                    color={Colors.iconColor} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <Text style={styles.iPriceTitleStyle}>Choose Date</Text>
+                    <View style={styles.timeinputContainerStyle}>
+                        <View style={styles.mainInputContainer}>
+                            <View style={styles.textInputContainerStyle}>
+                                <TextInput
+                                    editable={false}
+                                    placeholder={eDate}
+                                    style={{ ...styles.input, color: "#ccc" }} />
+                            </View>
+                            <TouchableOpacity
+                                onPress={() => showDatePicker()}
+                                style={styles.leftIconContainerStyle}
+                            >
+                                <Icon
+                                    name='calendar-outline'
+                                    size={hp("3%")}
+                                    color={Colors.iconColor} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <DateTimePickerModal
+                        isVisible={timeModal}
+                        mode='time'
+                        is24Hour={false}
+                        onConfirm={handleTimeConfirm}
+                        onCancel={hideDatePicker}
+                    />
+                    <DateTimePickerModal
+                        isVisible={dateModal}
+                        mode='date'
+                        is24Hour={false}
+                        onConfirm={handleDateConfirm}
+                        onCancel={hideDatePicker}
+                    />
 
+                    <View style={{ marginTop: hp("2%") }}>
+                        <Text style={styles.iPriceTitleStyle}>How much do you want to pay the assistant?</Text>
+                        <View style={{ ...styles.inputContainerStyle, height: hp("10%"), }}>
+                            <View style={styles.mainInputContainer}>
+                                <View style={styles.textInputContainerStyle}>
+                                    <TextInput
+                                        keyboardType="number-pad"
+                                        value={iPrice}
+                                        onChangeText={setIPrice}
+                                        placeholderTextColor="lightgrey"
+                                        style={styles.input}
+                                    />
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </ScrollView>
                 <TouchableOpacity
                     // onPress={() => continuePress()}
-                    onPress={() => navigation.navigate("AddDetailInputScreen")}
+                    onPress={() => navigation.navigate("PickUp")}
                     style={styles.signinButtonContainer}>
                     {loading ? (
                         <ActivityIndicator size="small" color={Colors.accentColor} />
@@ -169,7 +221,7 @@ const Delivery = ({ navigation }) => {
     )
 }
 
-export default Delivery
+export default AddDetailInputScreen
 
 const styles = StyleSheet.create({
     container: {
@@ -187,7 +239,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     imagesContainer: {
-        flex: 1
+        height: hp("35%"),
     },
     cameraButon: {
         alignItems: 'center',
@@ -230,7 +282,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         height: hp("6%"),
         borderRadius: hp("2%"),
-        marginTop: hp("2%")
+        marginTop: hp("2%"),
+        marginBottom: hp("2%")
     },
     descriptionContainerStyle: {
         backgroundColor: "#E6E6E6",
@@ -276,7 +329,6 @@ const styles = StyleSheet.create({
     },
     signinButtonContainer: {
         // elevation: 8,
-        marginTop: hp("2%"),
         height: hp("6%"),
         backgroundColor: Colors.primaryColor,
         borderRadius: hp("6%"),

@@ -34,6 +34,7 @@ import ChooseTime from './src/screens/ChooseTime';
 import PickUp from './src/screens/PickUp';
 import PickOff from './src/screens/PickOff';
 import Inbox from './src/screens/Inbox';
+import AddDetailInputScreen from './src/screens/AddDetailInputScreen';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 function SearchTab() {
@@ -144,6 +145,8 @@ function AdStackScreen() {
             <AdStack.Screen name="CreateAd" component={CreateAd}
                 options={{ headerShown: false }} />
             <AdStack.Screen name="MoreItem" component={MoreItem}
+                options={{ headerShown: false }} />
+            <AdStack.Screen name="AddDetailInputScreen" component={AddDetailInputScreen}
                 options={{ headerShown: false }} />
             <AdStack.Screen name="Delivery" component={Delivery}
                 options={{ headerShown: false }} />

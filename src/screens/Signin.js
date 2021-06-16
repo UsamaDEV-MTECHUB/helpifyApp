@@ -52,7 +52,7 @@ const Signin = ({navigation}) => {
                         </View>
                         <View style={{ marginTop: hp("3%") }}>
                             <TouchableOpacity
-                                onPress={() => navigation.navigate('Profile')}
+                                onPress={() => navigation.navigate('SearchAd')}
                                 style={{ ...styles.buttonContainer, backgroundColor: Colors.primaryColor }}>
                                 <Text style={{
                                     ...styles.buttonText,
